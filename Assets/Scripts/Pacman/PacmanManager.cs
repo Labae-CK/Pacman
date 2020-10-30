@@ -90,10 +90,17 @@ public class PacmanManager : MonoBehaviour
         {
             Coin coin = collision.GetComponentInParent<Coin>();
             Power += coin.AddPowerValue;
-            if(Power >= _prevHuntingPower + HuntingPower)
+            if(IsHunting)
             {
-                _prevHuntingPower = Power + HuntingPower;
-                ChangeState(PacmanHunting.Instance);
+                _prevHuntingPower = Power;
+            }
+            else
+            {
+                if (Power >= _prevHuntingPower + HuntingPower)
+                {
+                    _prevHuntingPower = Power + HuntingPower;
+                    ChangeState(PacmanHunting.Instance);
+                }
             }
             coin.HandleDestroy();
         }
